@@ -481,7 +481,7 @@ app.post("/send-email", async (req, res) => {
 
       // Send the email with the flyer attachment
       await transporter.sendMail({
-        to: student.email,
+        to: 'yashgaware291@gmail.com',
         subject: "Happy Birthday!",
         text: `Happy Birthday, ${student.name}! 🎉`,
         html: `<p>Dear ${student.name},</p><p>Wishing you a fantastic birthday!</p><p>Attached is your personalized flyer.</p>`,
