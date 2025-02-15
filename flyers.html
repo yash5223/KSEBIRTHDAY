@@ -117,7 +117,7 @@
     function sendEmail() {
       console.log("touched");
       const studentsToSend = students.filter(student => student.birthday === todayString);
-      fetch("http://localhost:3000", {
+      fetch("https://ksebirthday.onrender.com/send-email", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ students: studentsToSend }),
