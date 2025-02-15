@@ -5,7 +5,7 @@ const cors = require("cors");
 const puppeteer = require("puppeteer");
 const fs = require("fs");
 const path = require("path");
-
+require("dotenv").config();
 const app = express();
 
 // Middleware
@@ -18,8 +18,8 @@ const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
   port: 465,
   auth: {
-    user: "nexus0k6@gmail.com", // Your email
-    pass: "yvthyzzubdtzbkny", // App-specific password
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
   },
 });
 async function generateFlyer(student) {
