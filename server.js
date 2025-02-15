@@ -1,11 +1,12 @@
 const nodemailer = require("nodemailer");
 const express = require("express");
 const bodyParser = require("body-parser");
-const cors = require("cors");
 const puppeteer = require("puppeteer");
 const fs = require("fs");
 const path = require("path");
 require("dotenv").config();
+const express = require("express");
+const cors = require("cors");
 
 const app = express();
 
@@ -498,9 +499,7 @@ app.post("/send-email", async (req, res) => {
   res.status(200).send("Emails sent");
 });
 app.options("*", cors());
-
-// Start the server
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
