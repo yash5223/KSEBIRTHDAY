@@ -498,7 +498,7 @@ app.post("/send-email", async (req, res) => {
   res.status(200).send("Emails sent");
 });
 app.options("*", cors());
-const PORT = process.env.PORT || 3000;
+const PORT =3000;
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
