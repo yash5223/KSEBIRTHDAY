@@ -5,19 +5,25 @@ const cors = require("cors");
 const puppeteer = require("puppeteer");
 const fs = require("fs");
 const path = require("path");
+
 const app = express();
+
+// Middleware
 app.use(cors());
 app.use(bodyParser.json());
+
+// Nodemailer transporter setup
 const transporter = nodemailer.createTransport({
   secure: true,
-  host: "in-v3.mailjet.com",
+  host: "smtp.gmail.com",
   port: 465,
   auth: {
-    user: "cad6fafaf124b9911fac5e372e8ea2de",
-    pass: "614705fca1ec8055117c54644b80a341",
+    user: "nexus0k6@gmail.com", // Your email
+    pass: "yvthyzzubdtzbkny", // App-specific password
   },
 });
 async function generateFlyer(student) {
+    // Array of background images for each day of the week
     const backgrounds = [
       "https://imgur.com/oHUCJGa.jpg",
       "https://imgur.com/KXfqsdt.jpg",
@@ -25,25 +31,31 @@ async function generateFlyer(student) {
       "https://imgur.com/Dz0XVNw.jpg",
       "https://imgur.com/5tiYybx.jpg",
       "https://imgur.com/ncxzxie.jpg",
-      "https://imgur.com/4wJWEO5.jpg",
-    ];
+      "https://imgur.com/4wJWEO5.jpg",  // Saturday
+    ]; // Get the current day (0: Sunday, 1: Monday, ..., 6: Saturday)
     const nowInIST = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Kolkata" }));
-  const currentDay = nowInIST.getDay();
+  const currentDay = nowInIST.getDay(); // Get the day of the week in IST
+  
+  // Select the appropriate background image based on the day of the week
   const backgroundImage = backgrounds[currentDay];
+
 let photoContainerStyle = '';
 let contentStyle = '';
 let headingStyle = '';
 let paragraphStyle = '';
 let photoimgStyle = '';
+
 let leftPositionContent = '';
 let topPositionContent = '';
 let leftPositionPhoto = '';
 let topPositionPhoto = '';
+
 let leftPositionHeading = '';
 let topPositionHeading = '';
 let leftPositionParagraph = '';
 let topPositionParagraph = '';
-if (currentDay === 0) {
+
+if (currentDay === 0) { // Sunday
   photoContainerStyle = `
   width: 290px;
   height: 290px;
@@ -77,13 +89,15 @@ photoimgStyle = `
 `;
 leftPositionContent = '15px';
 topPositionContent = '250px';
-leftPositionPhoto = '400px'; 
-topPositionPhoto = '310px';
+leftPositionPhoto = '400px'; // Align photo to the right
+topPositionPhoto = '310px'; // Adjust top for photo
+
 leftPositionHeading = '15px';
-topPositionHeading = '35px';
+topPositionHeading = '35px'; // Heading is near content
 leftPositionParagraph = '15px';
 topPositionParagraph = '115px'; 
-}else if(currentDay === 1) {
+
+}else if(currentDay === 1) { // Monday
   photoContainerStyle = `
     width: 290px;
     height: 290px;
@@ -117,13 +131,15 @@ topPositionParagraph = '115px';
   `;
   leftPositionContent = '18px';
   topPositionContent = '250px';
-  leftPositionPhoto = '400px';
-  topPositionPhoto = '310px';
+  leftPositionPhoto = '400px'; // Align photo to the right
+  topPositionPhoto = '310px'; // Adjust top for photo
+
   leftPositionHeading = '18px';
-  topPositionHeading = '10px';
+  topPositionHeading = '10px'; // Heading is near content
   leftPositionParagraph = '18px';
   topPositionParagraph = '90px';
-} else if (currentDay === 2) {
+
+} else if (currentDay === 2) { // Tuesday
   photoContainerStyle = `
           width: 290px;
           height: 290px;
@@ -157,10 +173,11 @@ topPositionParagraph = '115px';
         `;
         leftPositionContent = '350px';
         topPositionContent = '170px';
-        leftPositionPhoto = '400px';
-        topPositionPhoto = '310px';
+        leftPositionPhoto = '400px'; // Align photo to the right
+        topPositionPhoto = '310px'; // Adjust top for photo
+
         leftPositionHeading = '18px';
-        topPositionHeading = '10px';
+        topPositionHeading = '10px'; // Heading is near content
         leftPositionParagraph = '18px';
         topPositionParagraph = '90px';
 }
@@ -198,12 +215,15 @@ photoimgStyle = `
 `;
 leftPositionContent = '35px';
 topPositionContent = '250px';
-leftPositionPhoto = '400px';
-topPositionPhoto = '310px';
+leftPositionPhoto = '400px'; // Align photo to the right
+topPositionPhoto = '310px'; // Adjust top for photo
+
 leftPositionHeading = '35px';
-topPositionHeading = '4px';
+topPositionHeading = '4px'; // Heading is near content
 leftPositionParagraph = '35px';
-topPositionParagraph = '70px';
+topPositionParagraph = '70px'; // Increase top for paragraph to avoid overlap
+
+
   }else if (currentDay === 4) { 
         photoContainerStyle = `
           width: 290px;
@@ -238,13 +258,15 @@ topPositionParagraph = '70px';
         `;
         leftPositionContent = '18px';
         topPositionContent = '280px';
-        leftPositionPhoto = '400px';
-        topPositionPhoto = '310px'; 
+        leftPositionPhoto = '400px'; // Align photo to the right
+        topPositionPhoto = '310px'; // Adjust top for photo
+
         leftPositionHeading = '18px';
-        topPositionHeading = '10px';
+        topPositionHeading = '10px'; // Heading is near content
         leftPositionParagraph = '18px';
         topPositionParagraph = '90px';
-  } else if (currentDay === 5) { 
+
+  } else if (currentDay === 5) { // Friday
     photoContainerStyle = `
     width: 290px;
     height: 290px;
@@ -278,13 +300,17 @@ topPositionParagraph = '70px';
   `;
   leftPositionContent = '35px';
   topPositionContent = '300px';
-  leftPositionPhoto = '400px';
-  topPositionPhoto = '310px';
+  leftPositionPhoto = '400px'; // Align photo to the right
+  topPositionPhoto = '310px'; // Adjust top for photo
+
   leftPositionHeading = '30px';
-  topPositionHeading = '19px';
+  topPositionHeading = '19px'; // Heading is near content
   leftPositionParagraph = '30px';
-  topPositionParagraph = '100px';
-  } else if (currentDay === 6) {
+  topPositionParagraph = '100px'; // Increase top for paragraph to avoid overlap
+
+
+
+  } else if (currentDay === 6) { // Saturday
     photoContainerStyle = `
     width: 290px;
     height: 290px;
@@ -318,13 +344,18 @@ topPositionParagraph = '70px';
   `;
   leftPositionContent = '15px';
   topPositionContent = '250px';
-  leftPositionPhoto = '400px';
-  topPositionPhoto = '310px';
+  leftPositionPhoto = '400px'; // Align photo to the right
+  topPositionPhoto = '310px'; // Adjust top for photo
+
   leftPositionHeading = '15px';
-  topPositionHeading = '35px';
+  topPositionHeading = '35px'; // Heading is near content
   leftPositionParagraph = '15px';
-  topPositionParagraph = '115px';
+  topPositionParagraph = '115px';  // Increase top for paragraph to avoid overlap
+
+
   }
+
+// Applying styles dynamically in HTML content
 const flyerHtml = `
   <html>
     <head>
@@ -416,24 +447,34 @@ const flyerHtml = `
 `;
 const browser = await puppeteer.launch({ headless: true });
   const page = await browser.newPage();
+
   await page.setViewport({ width: 768, height: 768 });
   await page.setContent(flyerHtml);
   const filePath = path.resolve(__dirname, `flyer-${student.name}.png`);
+
   await page.screenshot({
     path: filePath,
     fullPage: false,
   });
+
   await browser.close();
+
   return filePath;
 }
+
+// Route to handle sending emails with flyer attachments
 app.post("/send-email", async (req, res) => {
   const students = req.body.students;
+
   if (!students || !Array.isArray(students)) {
     return res.status(400).json({ error: "Invalid students data" });
   }
+
   for (const student of students) {
     try {
       const flyerPath = await generateFlyer(student);
+
+      // Send the email with the flyer attachment
       await transporter.sendMail({
         to: student.email,
         subject: "Happy Birthday!",
@@ -441,14 +482,18 @@ app.post("/send-email", async (req, res) => {
         html: `<p>Dear ${student.name},</p><p>Wishing you a fantastic birthday!</p><p>Attached is your personalized flyer.</p>`,
         attachments: [{ filename: `flyer-${student.name}.png`, path: flyerPath }],
       });
+
       console.log(`Email sent successfully to ${student.email}`);
-      fs.unlinkSync(flyerPath);
+      fs.unlinkSync(flyerPath); // Remove the file after sending the email
     } catch (error) {
       console.error(`Failed to send email to ${student.email}:`, error.message);
     }
   }
+
   res.status(200).send("Emails sent");
 });
+
+// Start the server
 const PORT = 3000;
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
