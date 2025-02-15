@@ -6,11 +6,14 @@ const puppeteer = require("puppeteer");
 const fs = require("fs");
 const path = require("path");
 require("dotenv").config();
+
 const app = express();
 
 // Middleware
-app.use(cors());
 app.use(bodyParser.json());
+app.use(cors({ origin: "https://yash5223.github.io", credentials: true })); // Allow your frontend
+
+
 
 // Nodemailer transporter setup
 const transporter = nodemailer.createTransport({
@@ -492,6 +495,7 @@ app.post("/send-email", async (req, res) => {
 
   res.status(200).send("Emails sent");
 });
+app.options("*", cors());
 
 // Start the server
 const PORT = 3000;
