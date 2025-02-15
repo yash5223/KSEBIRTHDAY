@@ -26,11 +26,6 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-const browser = await puppeteer.launch({
-  headless: "new",
-  args: ["--no-sandbox", "--disable-setuid-sandbox"],
-  executablePath: process.env.CHROME_PATH || puppeteer.executablePath(),
-});
 
 async function generateFlyer(student) {
     // Array of background images for each day of the week
