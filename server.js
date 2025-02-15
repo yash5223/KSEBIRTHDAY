@@ -3,7 +3,7 @@ const puppeteer = require("puppeteer");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const FLYER_URL = "https://yash5223.github.io/flyers.html"; // Update this URL
+const FLYER_URL = "https://yash5223.github.io"; // Update this URL
 
 app.get("/generate-pdf", async (req, res) => {
   try {
