@@ -2,7 +2,7 @@ const express = require("express");
 const puppeteer = require("puppeteer");
 
 const app = express();
-const PORT = process.env.PORT || 10000;
+const PORT = process.env.PORT || 3000;
 const FLYER_URL = "https://keystoneschoolofengineering.42web.io/flyers.html"; // Update this URL
 
 app.get("/generate-pdf", async (req, res) => {
