@@ -95,8 +95,7 @@
       }
     });
     if (flyersGenerated === 0) {
-    flyersContainer.innerHTML = "<p>No birthdays today!</p>";
-  }
+       flyersContainer.innerHTML = `<p>No birthdays today! (${istDate})</p>`;  }
     if (flyersGenerated > 0) {
       const sendEmailButton = document.createElement("button");
       sendEmailButton.classList.add("send-email-button");
