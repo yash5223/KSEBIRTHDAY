@@ -10,7 +10,7 @@ const FLYER_URL = "https://yash5223.github.io/KSEBIRTHDAY/flyers.html"; // ✅ U
 
 // ✅ Enable CORS for GitHub Pages
 app.use(cors({
-    origin: "https://yash5223.github.io", // ✅ Allow your frontend
+    origin: "*", // ✅ Allow all origins (for testing)
     methods: "GET,POST,PUT,DELETE",
     allowedHeaders: "Content-Type"
 }));
