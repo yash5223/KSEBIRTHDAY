@@ -50,15 +50,15 @@ app.post("/send-email", async (req, res) => {
     const transporter = nodemailer.createTransport({
         service: "gmail",
         auth: {
-            user: "your-email@gmail.com", // ✅ Replace with your email
-            pass: "your-email-password" // ✅ Replace with your email password (use environment variables instead)
+            user: "process.env.EMAIL_USER", // ✅ Replace with your email
+            pass: "process.env.EMAIL_PASS" // ✅ Replace with your email password (use environment variables instead)
         }
     });
 
     try {
         const pdf = await generatePDF();
         const mailOptions = {
-            from: "your-email@gmail.com", // ✅ Replace with your email
+            from: "process.env.EMAIL_USER", // ✅ Replace with your email
             to,
             subject,
             text,
