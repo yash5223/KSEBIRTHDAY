@@ -113,21 +113,34 @@
       flyersContainer.appendChild(sendWhatsAppButton);
 
     }
-    function sendEmail() {
-      console.log("touched");
-      const studentsToSend = students.filter(student => student.birthday === todayString);
-      fetch("https://ksebirthday.onrender.com/send-email", {
+function sendEmail() {
+    console.log("Sending email...");
+
+    const emailData = {
+        to: "yashgaware291@gmail.com", // ✅ Ensure this is a valid email
+        subject: "Happy Birthday!",
+        text: "Wishing you a fantastic birthday! 🎉",
+    };
+
+    console.log("Email Data:", emailData); // ✅ Log before sending
+
+    fetch("https://ksebirthday.onrender.com/send-email", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ students: studentsToSend.length ? studentsToSend : ["Test Student"] }),
-      }).then(response => {
+        body: JSON.stringify(emailData),
+    })
+    .then(response => {
         if (response.ok) {
-          console.log("Emails sent successfully!");
+            console.log("✅ Emails sent successfully!");
         } else {
-          console.error("Failed to send emails.");
+            console.error("❌ Failed to send emails.");
+            return response.json(); // Log the error response
         }
-      });
-    }
+    })
+    .then(data => console.log("Server Response:", data))
+    .catch(error => console.error("❌ Fetch Error:", error));
+}
+
     function sendWhatsApp() {
       const studentsToSend = students.filter(student => student.birthday === todayString);
 
