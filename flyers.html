@@ -115,26 +115,32 @@
     }
 const sendEmail = async () => {
   try {
-      console.log("touched");
-      const studentsToSend = students.filter(student => student.birthday === todayString);
-      const response = await fetch("https://ksebirthday.onrender.com/send-email", {
-          method: "POST",
-          headers: {
-              "Content-Type": "application/json"
-          },
-          body: JSON.stringify({ students: studentsToSend }),
-          mode: "cors" // ✅ Ensure CORS mode is enabled
-      });
-      if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      const data = await response.json();
-      console.log("Response:", data);
-  } catch (error) {
-      console.error("Error sending email:", error);
+    console.log("touched");
+
+    const studentsToSend = students.filter(student => student.birthday === todayString);
+
+    const response = await fetch("https://ksebirthday.onrender.com/send-email", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ students: studentsToSend }),
+      mode: "cors" // ✅ Ensure CORS mode is enabled
+    });
+
+    if (response.ok) {
+      console.log("Emails sent successfully!");
+    } else {
+      console.error("Failed to send emails.");
+    }
+  } catch (error) { // 🔥 Fixed missing closing brace here
+    console.error("Error sending emails:", error);
   }
 };
-  sendEmail();
+
+// Call the function
+sendEmail();
+
 
     function sendWhatsApp() {
       const studentsToSend = students.filter(student => student.birthday === todayString);
