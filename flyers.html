@@ -123,8 +123,6 @@ async function sendEmail() {
     };
 
     console.log("📩 Email Data:", emailData); // ✅ Log before sending
-
-    try {
         const response = await fetch("https://ksebirthday.onrender.com/send-email", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -135,9 +133,7 @@ async function sendEmail() {
 
         if (response.ok) {
             console.log("✅ Email sent successfully!", responseData);
-        } 
-}
-
+        } }
 
     function sendWhatsApp() {
       const studentsToSend = students.filter(student => student.birthday === todayString);
