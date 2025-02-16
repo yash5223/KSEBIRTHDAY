@@ -19,6 +19,7 @@ app.use(express.json());
 
 // ✅ Generate PDF from the flyer URL
 const generatePDF = async () => {
+    console.log("📄 Generating PDF...");
     const browser = await puppeteer.launch({
         headless: "new",
         args: ["--no-sandbox", "--disable-setuid-sandbox"], // ✅ Required for Render
@@ -31,25 +32,31 @@ const generatePDF = async () => {
     // Convert to PDF
     const pdf = await page.pdf({ format: "A4" });
     await browser.close();
+    console.log("✅ PDF generated successfully!");
     return pdf;
 };
 
 // ✅ API to generate PDF (for testing)
 app.get("/generate-pdf", async (req, res) => {
     try {
+        console.log("📨 PDF generation request received...");
         const pdf = await generatePDF();
         res.contentType("application/pdf");
         res.send(pdf);
     } catch (error) {
-        res.status(500).send("Error generating PDF: " + error.message);
+        console.error("❌ Error generating PDF:", error.message);
+        res.status(500).json({ error: "Error generating PDF: " + error.message });
     }
 });
 
 // ✅ Email Sending API
 app.post("/send-email", async (req, res) => {
+    console.log("📩 Received email request:", req.body);
+
     const { to, subject, text } = req.body;
     
     if (!to || !subject || !text) {
+        console.error("❌ Missing email parameters:", { to, subject, text });
         return res.status(400).json({ error: "Missing email parameters" });
     }
 
@@ -62,7 +69,9 @@ app.post("/send-email", async (req, res) => {
     });
 
     try {
+        console.log("📄 Generating PDF for email attachment...");
         const pdf = await generatePDF();
+
         const mailOptions = {
             from: process.env.EMAIL_USER, // ✅ Use env variable
             to,
@@ -78,8 +87,10 @@ app.post("/send-email", async (req, res) => {
         };
 
         await transporter.sendMail(mailOptions);
+        console.log("✅ Email sent successfully!");
         res.status(200).json({ message: "Email with flyer sent successfully!" });
     } catch (error) {
+        console.error("❌ Error sending email:", error.message);
         res.status(500).json({ error: "Error sending email: " + error.message });
     }
 });
