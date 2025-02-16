@@ -21,10 +21,11 @@ app.use(express.json());
 const generatePDF = async () => {
     console.log("📄 Generating PDF...");
     const browser = await puppeteer.launch({
-        headless: "new",
-        args: ["--no-sandbox", "--disable-setuid-sandbox"], // ✅ Required for Render
-        executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || "/usr/bin/google-chrome-stable" // ✅ Ensure Chrome is found
-    });
+    headless: "new",
+    args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || puppeteer.executablePath(),
+});
+
 
     const page = await browser.newPage();
     await page.goto(FLYER_URL, { waitUntil: "load" });
