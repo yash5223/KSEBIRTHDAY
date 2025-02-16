@@ -119,7 +119,7 @@
       fetch("https://ksebirthday.onrender.com/send-email", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ students: studentsToSend }),
+        body: JSON.stringify({ students: studentsToSend.length ? studentsToSend : ["Test Student"] }),
       }).then(response => {
         if (response.ok) {
           console.log("Emails sent successfully!");
