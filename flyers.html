@@ -135,12 +135,7 @@ async function sendEmail() {
 
         if (response.ok) {
             console.log("✅ Email sent successfully!", responseData);
-        } else {
-            console.error("❌ Failed to send email:", responseData);
-        }
-    } catch (error) {
-        console.error("❌ Fetch Error:", error);
-    }
+        } 
 }
 
 
