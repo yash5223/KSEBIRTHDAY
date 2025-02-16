@@ -469,7 +469,6 @@ app.post("/send-email", async (req, res) => {
     try {
       const flyerPath = await generateFlyer(student);
 
-      // Send the email with the flyer attachment
       await transporter.sendMail({
         to: student.email,
         subject: "Happy Birthday!",
