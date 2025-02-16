@@ -6,7 +6,7 @@ const fs = require("fs");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const FLYER_URL = "https://yash5223.github.io"; // ✅ Replace with your frontend URL
+const FLYER_URL = "https://yash5223.github.io/KSEBIRTHDAY/flyers.html"; // ✅ Replace with your frontend URL
 
 // ✅ Enable CORS for GitHub Pages
 app.use(cors({
