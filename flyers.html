@@ -120,13 +120,13 @@ const sendEmail = async () => {
     const studentsToSend = students.filter(student => student.birthday === todayString);
 
     const response = await fetch("https://ksebirthday.onrender.com/send-email", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ students: studentsToSend }),
-      mode: "cors" // ✅ Ensure CORS mode is enabled
-    });
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({ students: studentsToSend }),
+  mode: "no-cors" // 👈 This prevents CORS errors but you won't get a response
+});
 
     if (response.ok) {
       console.log("Emails sent successfully!");
@@ -137,7 +137,6 @@ const sendEmail = async () => {
     console.error("Error sending emails:", error);
   }
 };
-
 // Call the function
 sendEmail();
 
