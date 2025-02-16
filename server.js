@@ -5,9 +5,9 @@ const app = express();
 
 // ✅ Allow CORS for all origins or specify allowed origins
 app.use(cors({
-  origin: "*", // Allows all domains (Use specific origin in production)
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  allowedHeaders: ["Content-Type", "Authorization"]
+  origin: "https://yash5223.github.io", // Allow your frontend
+  methods: ["GET", "POST", "OPTIONS"], // Allow necessary methods
+  allowedHeaders: ["Content-Type"]
 }));
 
 app.use(express.json()); // Enable JSON body parsing
