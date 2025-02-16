@@ -8,8 +8,15 @@ const path = require("path");
 
 const app = express();
 
-// Middleware
-app.use(cors());
+// ✅ Allow CORS for all origins or specify allowed origins
+app.use(cors({
+  origin: "*", // Allows all domains (Use specific origin in production)
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"]
+}));
+app.post("/send-email", async (req, res) => {
+  res.json({ message: "CORS issue fixed!" });
+});
 app.use(bodyParser.json());
 
 // Nodemailer transporter setup
