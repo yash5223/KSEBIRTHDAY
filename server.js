@@ -23,7 +23,7 @@ const generatePDF = async () => {
     const browser = await puppeteer.launch({
         headless: "new",
         args: ["--no-sandbox", "--disable-setuid-sandbox"], // ✅ Required for Render
-        executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || undefined, // ✅ Ensure Render finds Chrome
+        executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || "/usr/bin/google-chrome-stable" // ✅ Ensure Chrome is found
     });
 
     const page = await browser.newPage();
@@ -35,6 +35,7 @@ const generatePDF = async () => {
     console.log("✅ PDF generated successfully!");
     return pdf;
 };
+
 
 // ✅ API to generate PDF (for testing)
 app.get("/generate-pdf", async (req, res) => {
