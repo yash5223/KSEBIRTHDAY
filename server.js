@@ -1,96 +1,53 @@
 const express = require("express");
 const cors = require("cors");
-const puppeteer = require("puppeteer");
 const nodemailer = require("nodemailer");
-require("dotenv").config(); // ✅ Load environment variables
+require("dotenv").config(); // Load environment variables
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const FLYER_URL = "https://yash5223.github.io/KSEBIRTHDAY/flyers.html"; // ✅ Update this if needed
 
-// ✅ Enable CORS for GitHub Pages
+// Enable CORS
 app.use(cors({
-    origin: "*", // ✅ Allow all origins (for testing)
+    origin: "*", // Allow all origins
     methods: "GET,POST,PUT,DELETE",
     allowedHeaders: "Content-Type"
 }));
 
 app.use(express.json());
 
-// ✅ Generate PDF from the flyer URL
-const generatePDF = async () => {
-    console.log("📄 Generating PDF...");
-    const browser = await puppeteer.launch({
-    headless: "new",
-    args: ["--no-sandbox", "--disable-setuid-sandbox"],
-    executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || puppeteer.executablePath(),
-});
+// Email Sending API
+app.post("/send-birthday-email", async (req, res) => {
+    console.log("📩 Received birthday email request:", req.body);
 
-
-    const page = await browser.newPage();
-    await page.goto(FLYER_URL, { waitUntil: "load" });
-
-    // Convert to PDF
-    const pdf = await page.pdf({ format: "A4" });
-    await browser.close();
-    console.log("✅ PDF generated successfully!");
-    return pdf;
-};
-
-
-// ✅ API to generate PDF (for testing)
-app.get("/generate-pdf", async (req, res) => {
-    try {
-        console.log("📨 PDF generation request received...");
-        const pdf = await generatePDF();
-        res.contentType("application/pdf");
-        res.send(pdf);
-    } catch (error) {
-        console.error("❌ Error generating PDF:", error.message);
-        res.status(500).json({ error: "Error generating PDF: " + error.message });
-    }
-});
-
-// ✅ Email Sending API
-app.post("/send-email", async (req, res) => {
-    console.log("📩 Received email request:", req.body);
-
-    const { to, subject, text } = req.body;
+    const { to, name } = req.body;
     
-    if (!to || !subject || !text) {
-        console.error("❌ Missing email parameters:", { to, subject, text });
+    if (!to || !name) {
+        console.error("❌ Missing email parameters:", { to, name });
         return res.status(400).json({ error: "Missing email parameters" });
     }
 
     const transporter = nodemailer.createTransport({
         service: "gmail",
         auth: {
-            user: process.env.EMAIL_USER, // ✅ Use environment variables
+            user: process.env.EMAIL_USER,
             pass: process.env.EMAIL_PASS
         }
     });
 
+    const subject = `🎉 Happy Birthday, ${name}! 🎂`;
+    const text = `Dear ${name},\n\nWishing you a very Happy Birthday! 🎈🥳 May your day be filled with love, joy, and laughter.\n\nBest wishes,\nYour Friend`;
+
+    const mailOptions = {
+        from: process.env.EMAIL_USER,
+        to,
+        subject,
+        text
+    };
+
     try {
-        console.log("📄 Generating PDF for email attachment...");
-        const pdf = await generatePDF();
-
-        const mailOptions = {
-            from: process.env.EMAIL_USER, // ✅ Use env variable
-            to,
-            subject,
-            text,
-            attachments: [
-                {
-                    filename: "flyer.pdf",
-                    content: pdf,
-                    contentType: "application/pdf"
-                }
-            ]
-        };
-
         await transporter.sendMail(mailOptions);
-        console.log("✅ Email sent successfully!");
-        res.status(200).json({ message: "Email with flyer sent successfully!" });
+        console.log("✅ Birthday email sent successfully!");
+        res.status(200).json({ message: "Birthday email sent successfully!" });
     } catch (error) {
         console.error("❌ Error sending email:", error.message);
         res.status(500).json({ error: "Error sending email: " + error.message });
