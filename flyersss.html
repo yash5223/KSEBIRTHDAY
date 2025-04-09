@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Birthday Flyers</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #e0e0e0;
+      margin: 0;
+      padding: 0;
+    }
+    #flyers-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 50px;
+      align-items: flex-start;
+    }
+    .flyer {
+      width: 700px;
+      height: 700px;
+      border-radius: 15px;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      position: relative;
+      overflow: hidden;
+      border: 2px solid #0077cc;
+      background-size: cover;
+      background-position: center;
+    }
+    .content {
+      position: relative;
+      color: #151212;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+    }
+    .content h1 {
+      font-size: 36px;
+      font-weight: bold;
+    }
+    .content p {
+      font-size: 24px;
+      font-weight: normal;
+    }
+    .photo-container {
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 5px solid #fff;
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+    }
+    .photo-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .send-email-button, .send-whatsapp-button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #0077cc;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      display: inline-block;
+    }
+    .send-email-button:hover, .send-whatsapp-button:hover {
+      background-color: #005fa3;
+    }
+    
+    /* Sunday-specific alignment */
+  /* Day-specific styles for alignment of text and photo */
+    .sunday .content h1 {
+      position:relative;
+      color:rgb(245, 248, 250);
+      top: 280px;
+      right:280px;
+      font-family:Times New Roman;
+      font-size: 48px; /* Adjust the name font size */
+      font-weight: bold;
+    }
+    .sunday .content p {
+      font-size: 28px; /* Adjust the profession font size */
+      position:relative;
+      top:260px;
+      right:240px;
+      font-family:Times New Roman;
+      color:rgb(245, 248, 250);
+      font-weight: normal;
+    }
+    .sunday .photo-container {
+      position: absolute;
+      top: 280px; /* Adjust for vertical position */
+      left: 520px; /* Adjust for horizontal position */
+      transform: translateX(-50%);
+      width: 290px;
+      height: 290px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 5px solid #ffffff;
+      box-shadow: 0 5px 10px rgba(243, 241, 241, 0.966);
+    }
+
+    .monday .content h1 {
+      position:relative;
+      color:rgb(245, 248, 250);
+      top: 240px;
+      right:260px;
+      font-family:Times New Roman;
+      font-size: 48px; /* Adjust the name font size */
+      font-weight: bold;
+    }
+    .monday .content p {
+      font-size: 28px; /* Adjust the profession font size */
+      position:relative;
+      top:210px;
+      right:220px;
+      font-family:Times New Roman;
+      color:rgb(245, 248, 250);
+      font-weight: normal;
+    }
+    .monday .photo-container {
+      position: absolute;
+      top: 310px; /* Adjust for vertical position */
+      left: 520px; /* Adjust for horizontal position */
+      transform: translateX(-50%);
+      width: 290px;
+      height: 290px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 5px solid #000000;
+      box-shadow: 0 5px 10px rgba(243, 241, 241, 0.966);
+    }
+
+    .tuesday .content h1 {
+      position:relative;
+      color:rgb(245, 248, 250);
+      top: 160px;
+      left:20px;
+      font-family:Times New Roman;
+      font-size: 48px; /* Adjust the name font size */
+      font-weight: bold;
+    }
+    .tuesday .content p {
+      font-size: 28px; /* Adjust the profession font size */
+      position:relative;
+      top:130px;
+      left:80px;
+      font-family:Times New Roman;
+      color:rgb(245, 248, 250);
+      font-weight: normal;
+    }
+    .tuesday .photo-container {
+      position: absolute;
+      top: 310px; /* Adjust for vertical position */
+      left: 520px; /* Adjust for horizontal position */
+      transform: translateX(-50%);
+      width: 290px;
+      height: 290px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 5px solid #000000;
+      box-shadow: 0 5px 10px rgba(243, 241, 241, 0.966);
+    }
+
+    .wednesday .content h1 {
+      position:relative;
+      color:rgb(245, 248, 250);
+      top: 220px;
+      right:230px;
+      font-family:Times New Roman;
+      font-size: 48px; /* Adjust the name font size */
+      font-weight: bold;
+    }
+    .wednesday .content p {
+      font-size: 28px; /* Adjust the profession font size */
+      position:relative;
+      top:20px;
+      right:180px;
+      font-family:Times New Roman;
+      color:rgb(245, 248, 250);
+      font-weight: normal;
+    }
+    .wednesday .photo-container {
+      position: absolute;
+      top: 310px; /* Adjust for vertical position */
+      left: 520px; /* Adjust for horizontal position */
+      transform: translateX(-50%);
+      width: 290px;
+      height: 290px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 5px solid #000000;
+      box-shadow: 0 5px 10px rgba(243, 241, 241, 0.966);
+    }
+
+    .thursday .content h1 {
+      position:relative;
+      color:rgb(245, 248, 250);
+      top: 250px;
+      right:290px;
+      font-family:Times New Roman;
+      font-size: 48px; /* Adjust the name font size */
+      font-weight: bold;
+    }
+    .thursday .content p {
+      font-size: 28px; /* Adjust the profession font size */
+      position:relative;
+      top:250px;
+      right:250px;
+      font-family:Times New Roman;
+      color:rgb(245, 248, 250);
+      font-weight: normal;
+    }
+    .thursday .photo-container {
+      position: absolute;
+      top: 310px; /* Adjust for vertical position */
+      left: 520px; /* Adjust for horizontal position */
+      transform: translateX(-50%);
+      width: 290px;
+      height: 290px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 5px solid #000000;
+      box-shadow: 0 5px 10px rgba(243, 241, 241, 0.966);
+    }
+    .friday .content h1 {
+      position:relative;
+      color:rgb(245, 248, 250);
+      top: 285px;
+      right:240px;
+      font-family:Times New Roman;
+      font-size: 48px; /* Adjust the name font size */
+      font-weight: bold;
+    }
+    .friday .content p {
+      font-size: 28px; /* Adjust the profession font size */
+      position:relative;
+      top:280px;
+      right:200px;
+      font-family:Times New Roman;
+      color:rgb(245, 248, 250);
+      font-weight: normal;
+    }
+    .friday .photo-container {
+      position: absolute;
+      top: 310px; /* Adjust for vertical position */
+      left: 520px; /* Adjust for horizontal position */
+      transform: translateX(-50%);
+      width: 290px;
+      height: 290px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 5px solid #000000;
+      box-shadow: 0 5px 10px rgba(243, 241, 241, 0.966);
+    }
+
+    .saturday .content h1 {
+      position:relative;
+      color:rgb(245, 248, 250);
+      top: 250px;
+      right:280px;
+      font-family:Times New Roman;
+      font-size: 48px; /* Adjust the name font size */
+      font-weight: bold;
+    }
+    .saturday .content p {
+      font-size: 28px; /* Adjust the profession font size */
+      position:relative;
+      top:240px;
+      right:240px;
+      font-family:Times New Roman;
+      color:rgb(245, 248, 250);
+      font-weight: normal;
+    }
+    .saturday .photo-container {
+      position: absolute;
+      top: 310px; /* Adjust for vertical position */
+      left: 520px; /* Adjust for horizontal position */
+      transform: translateX(-50%);
+      width: 290px;
+      height: 290px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 5px solid #000000;
+      box-shadow: 0 5px 10px rgba(243, 241, 241, 0.966);
+    }
+  </style>
+</head>
+<body>
+  <div id="flyers-container"></div>
+
+  <script>
+    const students = [
+      { name: "Alice", birthday: "2025-04-09", email: "bhumikashetty1474@gmail.com", photo: "https://randomuser.me/api/portraits/women/44.jpg", profession: "Graphic Designer" },
+      { name: "Riya", birthday: "2025-03-31", email: "shewalesamruddhi327@gmail.com", photo: "https://randomuser.me/api/portraits/men/33.jpg", profession: "Software Developer" },
+      { name: "Zeus", birthday: "2025-02-09", email: "suyogmankar777@gmail.com", photo: "https://randomuser.me/api/portraits/men/15.jpg", profession: "Teacher" },
+    ];
+
+    // Get the current date in IST
+    const now = new Date();
+    const istDate = new Date(now.toLocaleString("en-US", { timeZone: "Asia/Kolkata" }));
+    const todayString = istDate.toISOString().split("T")[0];
+  const flyersContainer = document.getElementById("flyers-container");
+
+  const dayOfWeek = istDate.getDay(); // Day of the week in IST
+
+  const backgrounds = {
+      0: "https://imgur.com/oHUCJGa.jpg",
+      1: " https://imgur.com/KXfqsdt.jpg",
+      2: "https://imgur.com/cCmgfEQ.jpg",
+      3: "https://imgur.com/Dz0XVNw.jpg",
+      4: "https://imgur.com/5tiYybx.jpg",
+      5: "https://imgur.com/ncxzxie.jpg",
+      6: "https://imgur.com/4wJWEO5.jpg",
+  }
+    const dayClasses = {
+      0: "sunday", 
+      1: "monday",
+      2: "tuesday",
+      3: "wednesday",
+      4: "thursday",
+      5: "friday", 
+      6: "saturday", 
+    };
+
+    let flyersGenerated = 0;
+
+    students.forEach(student => {
+      if (student.birthday === todayString) {
+        const flyer = document.createElement("div");
+        flyer.classList.add("flyer", dayClasses[dayOfWeek]);
+        flyer.style.backgroundImage = `url('${backgrounds[dayOfWeek]}')`;
+
+        const content = document.createElement("div");
+        content.classList.add("content");
+
+        const name = document.createElement("h1");
+        name.textContent = student.name;
+
+        const profession = document.createElement("p");
+        profession.textContent = student.profession;
+
+        content.appendChild(name);
+        content.appendChild(profession);
+
+        const photoContainer = document.createElement("div");
+        photoContainer.classList.add("photo-container");
+
+        const photo = document.createElement("img");
+        photo.src = student.photo;
+
+        photoContainer.appendChild(photo);
+        flyer.appendChild(content);
+        flyer.appendChild(photoContainer);
+
+        flyersContainer.appendChild(flyer);
+        flyersGenerated++;
+      }
+    });
+    if (flyersGenerated === 0) {
+    flyersContainer.innerHTML = "<p>No birthdays today!</p>";
+  }
+
+    if (flyersGenerated > 0) {
+      const sendEmailButton = document.createElement("button");
+      sendEmailButton.classList.add("send-email-button");
+      sendEmailButton.textContent = "Send to Email";
+
+      sendEmailButton.addEventListener("click", () => {
+        sendEmail();
+      });
+
+      const sendWhatsAppButton = document.createElement("button");
+      sendWhatsAppButton.classList.add("send-whatsapp-button");
+      sendWhatsAppButton.textContent = "Send to WhatsApp";
+
+      sendWhatsAppButton.addEventListener("click", () => {
+        sendWhatsApp();
+      });
+
+      flyersContainer.appendChild(sendEmailButton);
+      flyersContainer.appendChild(sendWhatsAppButton);
+
+    }
+
+/*I USED A SEND EMAIL BUTTON HERE */
+    function sendEmail() {
+      const studentsToSend = students.filter(student => student.birthday === todayString);
+
+      fetch("http://localhost:3000/send-email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ students: studentsToSend }),
+      }).then(response => {
+        if (response.ok) {
+          console.log("Emails sent successfully!");
+        } else {
+          console.error("Failed to send emails.");
+        }
+      });
+    }
+
+/*send button for WHATSAPP*/
+    function sendWhatsApp() {
+      const studentsToSend = students.filter(student => student.birthday === todayString);
+
+      studentsToSend.forEach(student => {
+        const message = `Happy Birthday, ${student.name}! 🎉🎂 - From ${student.profession}`;
+        const whatsappURL = `https://wa.me/?text=${encodeURIComponent(message)}`;
+
+        window.open(whatsappURL, "_blank");
+      });
+    }
+  </script>
+</body>
+</html>
