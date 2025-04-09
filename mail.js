@@ -487,8 +487,8 @@ app.post("/send-email", async (req, res) => {
 });
 
 // Start the server
-const PORT = 3000;
+const PORT = 1000;
 app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+  console.log(`Server running on https://ksebirthday.onrender.com:${PORT}`);
 });
 
